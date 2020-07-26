@@ -44,9 +44,9 @@ SECRET_KEY = get_universeexplorerblog('SECRET_KEY')
 
 
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'universeexplorerblog.herokuapp.com']
 
 
 # Application definition
