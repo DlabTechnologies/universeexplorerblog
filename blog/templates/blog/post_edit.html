@@ -1,0 +1,128 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+<div class="my-login-page">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper mt-5" style="width: 80%;">
+					
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title" style="text-align: center;">Edit Post</h4>
+							<form method="POST" class="my-login-validation"  validate="novalidate" action=""  enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.media }}
+								<div class="form-group">
+									<label for="email">Post Title</label>
+									{% render_field form.title  type="text" class="form-control" name="title" required="required" %}
+									
+								</div>
+
+                <div class="form-group image-group" id="id_image_group">
+									<label for="email"> Post Image</label>
+                  
+                  {% if post.image %}
+										<img class="img-fluid image"src="{{post.image.url}}"  id="id_image_display">
+										{% endif %}
+									
+								   
+								  </div>
+
+								<div class="form-group ">
+									
+									{% render_field form.image  type="file" class="form-control " name="image" accept="image/*"  placeholder="Upload a photo"  onchange="readURL(this)" %}
+									<span style="color: red; list-style:none;  ">{{form.image.errors}}</span>
+								</div>
+
+								<script type="text/javascript">
+                  
+                  
+
+									document.getElementById('id_image_group').onclick = function(event){
+									  document.getElementById('id_image_file').click();
+									  
+				  
+									};
+									function readURL(input){
+									  var reader = new FileReader();
+									  reader.onload = function (e){
+										$('#id_image_display')
+										.attr('src', e.target.result)
+									  };
+									  reader.readAsDataURL(input.files[0]);
+									}
+				  
+								  </script>
+								<div class="form-group">
+									<label for="email">Post Body</label>
+									{% render_field form.body id="text" type="text" class="form-control" name="body" required="required" %}
+									
+                                </div>
+                                
+                                <div class="form-group">
+									<label for="email">Post Status </label>
+									{{ form.status }}
+									
+                                </div>
+                                <div class="form-group">
+                                  <label for="email"> Notice post  with draft status will not be visible to other Users</label>
+                                  
+                                </div>
+                                
+                                <div class="form-check mb-2 mr-sm-2">
+                                  {% render_field form.restrict_comment class="form-check-input" type="checkbox" id="inlineFormCheck" %}
+                                  
+                                  <label class="form-check-label" for="inlineFormCheck">
+                                    Restrict comment on this post
+                                  </label>
+                                  </div>
+                                
+                                  <div class="form-group">
+                                    <label for="email">Post Tags</label>
+                                    {% render_field form.tags id="text" type="text" class="form-control" name="tags" required="required" data-role="tagsinput" placeholder="Enter Post tags seperated with space eg: django python " %}
+                                    
+                                                  </div>
+
+
+
+								
+								 
+                
+              
+								<div class="form-group m-0">
+									<button type="submit" class="btn btn-primary btn-inline">
+										<i class="fa fa-save mr-2"></i>Save 
+									</button>
+								</div>
+								
+				
+
+                {% for field in form %}
+                {% for error in field.errors %}
+                <p style = "color:red;">{{errors}}</p>
+                {% endfor %}
+                {% endfor %}
+         
+                {% if form.non_field_errors %}
+                <span style ="color:red;">
+                  <p>{{form.non_field_errors}}
+                  </span>
+                    {% endif %}
+							</form>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+  </section>
+  
+  </div>
+
+
+{% endblock content %}

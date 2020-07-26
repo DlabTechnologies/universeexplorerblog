@@ -1,0 +1,126 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+{% include 'blog/snippets/messages.html' %}
+
+<div class="my-login-page">
+<section class="h-100">
+  <div class="container h-100">
+    <div class="row justify-content-md-center h-100">
+      <div class="card-wrapper mt-5">
+        
+        <div class="card fat">
+          <div class="card-body">
+            <h4 class="card-title" style="text-align: center;">Update Account Info</h4>
+            <form method="POST" class="my-login-validation"  action="" enctype="multipart/form-data" >
+              {% csrf_token %}
+              <div class="form-group">
+               
+
+                <label for="name">First Name</label>
+                {% render_field form.first_name id="name" type="text" class="form-control" name="name" autofocus="autofocus" required="required"  %}
+                <span style="color: red; list-style:none;  ">{{form.first_name.errors}}</span> 
+                <div class="invalid-feedback">
+                  What's your first name?
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name">Last Name</label>
+                {% render_field form.last_name id="name" type="text" class="form-control" name="name" autofocus="autofocus" required="required" %}
+                <span style="color: red; list-style:none;  ">{{form.last_name.errors}}</span> 
+                <div class="invalid-feedback">
+                  What's your last name?
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name">Username</label>
+                {% render_field form.username id="name" type="text" class="form-control" name="name" autofocus="autofocus" required="required" %}
+                <span style="color: red; list-style:none;  ">{{form.username.errors}}</span> 
+                <div class="invalid-feedback">
+                  What's your Username?
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="name"> </label>
+                {% render_field form.email id="email" type="hidden" class="form-control" name="email" autofocus="autofocus" required="required" %}
+                <span style="color: red; list-style:none;  ">{{form.email.errors}}</span> 
+                <div class="invalid-feedback">
+                  What's your Email Address?
+                </div>
+              </div>
+
+             
+
+
+              <div class="form-group image-group" id="id_image_group">
+                <label for="photo" style="text-align: center;">Change Profile Photo</label>
+                {% if request.user.photo %}
+                    <img class="img-fluid image" src="{{request.user.photo.url}}" id="id_image_display">
+                    {% else %}
+                    <img class="img-fluid image" src="{% static 'account/img/default.jpg' %}" id="id_image_display">
+                    {% endif %}
+                
+               
+              </div>
+                
+              <div class="form-group">
+                
+                    
+                {% render_field form.photo id="id_image_file" type="file" class="form-control " name="photo" accept="image/*"  onchange="readURL(this)" %}
+                <span style="color: red; list-style:none;  ">{{form.photo.errors}}</span> 
+                
+                <script type="text/javascript">
+                  
+                  
+
+                  document.getElementById('id_image_group').onclick = function(event){
+                    document.getElementById('id_image_file').click();
+                    
+
+                  };
+                  function readURL(input){
+                    var reader = new FileReader();
+                    reader.onload = function (e){
+                      $('#id_image_display')
+                      .attr('src', e.target.result)
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                  }
+
+                </script>
+                
+                
+                
+                <div class="invalid-feedback">
+                  Your email is invalid
+                </div>
+              </div>
+
+              <div class="form-group m-0">
+                <button type="submit" class="btn btn-primary btn-Inline">
+                <i class="fa fa-save"></i>  Save Changes
+                </button>
+              </div>
+              
+             
+            </form>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+
+
+
+ 
+{% endblock content %}

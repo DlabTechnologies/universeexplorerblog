@@ -1,0 +1,20 @@
+
+
+{% load cool_num %}
+
+{% if user.is_authenticated %}
+          <form action="{% url 'like_post' %}" method="post">
+            {% csrf_token%}
+            {% if is_liked %}
+            <button type="submit" id="like" name="post_id" value="{{post.id}}" class="btn btn-primary text-white" style="font-size: 15px;">{{total_likes|cool_num}}<i class="fa fa-thumbs-up mr-2 ml-1"></i></button>
+            {% else %}
+            <button type="submit" id="like" name="post_id" value="{{post.id}}" class="btn btn-primary text-white" style="font-size: 15px;">{{total_likes|cool_num}}<i class="fa fa-thumbs-up mr-2 ml-1"></i>  </button>
+            {% endif %}
+
+          </form>
+          {% else %}
+
+
+<a href="{% url 'login' %}?next={{post.get_absolute_url}}" class="btn btn-primary text-white" style="font-size: 15px;">{{total_likes|cool_num}}<i class="fa fa-thumbs-up mr-2 ml-1"></i>  </a>
+            
+{% endif %}

@@ -1,0 +1,10 @@
+{% if user.is_authenticated %}
+<div  style="display: inline-block; " class="mt-4">
+  {% if is_favourite %}
+  <a href="{% url 'blog:favourite_post' id=post.id slug=post.slug %}" id="favourite" class="btn btn-danger">remove from favourite</a>
+  {% else %}
+  <a href="{% url 'blog:favourite_post' id=post.id slug=post.slug %}" id="favourite" class="btn btn-danger">add to favourite</a>
+  {% endif %}
+</div>
+{% endif %}
+

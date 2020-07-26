@@ -1,0 +1,326 @@
+{% load static %}
+{% load cool_num %}
+{% load humanize %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Universe-explorer-blog">
+<meta name="author" content="Dlab Technologies">
+
+ <title>Universe - Explorer</title>
+
+
+
+<!--favicon-->
+<link rel="icon" href="{% static 'account/img/favicon1.ico' %}" type="image/x-icon">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'blog/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'account/css/my-login.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+
+
+
+
+<!--Header-->
+</head>
+
+<body>
+  
+
+
+  <nav class="navbar navbar-inverse navbar-expand-xl navbar-dark">
+    <a class="navbar-brand" href="{% url 'post_list' %}"></i><b>Universe Explorer</b></a> 
+    <div class="navbar-header d-flex col">
+       		
+      <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle navbar-toggler ml-auto">
+        <span class="navbar-toggler-icon"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <!-- Collection of nav links, forms, and other content for toggling -->
+    <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">		
+
+
+      <form class="navbar-form form-inline" method="get" action="{% url 'post_list' %}">
+        <div class="input-group search-box">
+          <input type="search" name="q" id="qq" class="form-control" placeholder="Search this blog" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-danger" type="submit">
+              <i class="fa fa-search text-white"></i>
+            </button>
+          </div>
+        </div>
+        </form>
+
+     
+      <ul class="nav navbar-nav navbar-right ml-auto">
+        <li class="nav-item active mr-3 align-left"><a href="{% url 'post_list' %}" class="nav-link"><i class="fa fa-home"></i><span>Home</span></a></li>
+        <li class="nav-item active mr-3"><a href="{% url 'contact' %}" class="nav-link"><i class="fa fa-envelope"></i><span>contact</span></a></li>
+        {% if user.is_superuser %}
+        <li class="nav-item active mr-3"><a href="{% url 'send_email' %}" class="nav-link"><i class="fa fa-send"></i><span>Send Email To Users</span></a></li>
+       
+        {% endif %}
+        {%  if request.user.is_authenticated %}
+        
+        <li class="nav-item dropdown active mr-5"  >
+          <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action">
+            {% if request.user.photo %}
+             <img src="{{request.user.photo.url}}" class="avatar " alt="Avatar"> 
+             {% else %}
+             <img src="{% static 'account/img/default.jpg' %}" class="avatar" alt="Avatar">
+             {% endif %}
+             {{request.user.email}} <b class="caret"></b></a>
+             
+      
+             <ul class="dropdown-menu">
+             
+
+            <li><a href="{% url 'blog:post_create' %}" class="dropdown-item "><i class="fa fa-pencil"></i>Write Post</a></li>
+            
+            <li class="divider dropdown-divider"></li>
+            <li><a href="{% url 'blog:post_favourite_list' %}" class="dropdown-item"><i class="fa fa-heart text-danger"></i> Favourite Post<span class="badge badge-primary ml-2 " style="font-size: 13px;">{{favourite_posts_count}}</span></a></li>
+          
+
+
+            <li class="divider dropdown-divider"></li>
+            <li><a href="{% url 'user_post_list' %}" class="dropdown-item" ><i class="fa fa-book" aria-hidden="true"  ></i> Written Post <span class="badge badge-primary ml-1 " style="font-size: 13px;"> {{all_user_posts_count}} </span></a></li>
+            
+
+            <li class="divider dropdown-divider"></li>
+            <li><a href="{% url 'password_change' %}" class="dropdown-item"><i class="fa fa-key" ></i>Change Password</a></li>
+          
+            
+            <li class="divider dropdown-divider"></li>
+            <li><a href="{% url 'account_update' %}" class="dropdown-item"><i class="fa fa-refresh"></i>Update Account Info</a></li>
+          
+            <li class="divider dropdown-divider"></li>
+            <li><a href="{% url 'logout' %}" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item active mr-3"><a href="{% url 'login' %}" class="nav-link"><i class="fa fa-sign-in"></i><span>Login</span></a></li>
+        <li class="nav-item active mr-3"><a href="{% url 'register' %}" class="nav-link"><i class="fa fa-sign-in"></i><span>Sign-up</span></a></li>
+       {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+
+<!--End Header-->
+
+
+
+    
+        <div class="main">
+          
+            {% block content %}
+
+            {% endblock content %}
+        </div>
+
+        
+<!--end body-->
+
+   <!--footer -->
+   <footer class="footer-section mt-5 " >
+    
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 text-center text-lg-left">
+                    <div class="copyright-text">
+                      <p class="m-auto"> Copyright &copy;{% now 'Y' %} Universe Explorer Blog All Rights Reserved</p>
+                    </div>
+                </div>
+
+                
+                <div class="col-xl-6 col-lg-6 d-none d-lg-block text-right">
+                    <div class="footer-menu">
+                        <ul>
+
+                          {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'post_list' %}">Home</a></li>
+                            <li><a href="{% url 'contact' %}">contact</a></li>
+                            {% else %}
+                            <li><a href="{% url 'post_list' %}">Home</a></li>
+                            <li><a href="{% url 'contact' %}">contact</a></li>
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                            <li><a href="{% url 'register' %}">Signup</a></li>
+                            {% endif %}
+                           
+                            
+                             <li> <a href="#" style="font-size:30px;" > <i class="fa fa-facebook-square" ></i></a></li>
+                             <li> <a href="#" style="font-size:30px;"> <i class="fa fa-twitter-square" ></i></a></li>
+                            <li>  <a href="#" style="font-size:30px;"> <i class="fa fa-instagram"></i></a></li>
+                         
+                        </ul>
+                       
+
+
+
+                        
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+     
+  
+    
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.js' %}">
+    <script src="{% static 'account/script/login.js' %}"></script>
+    
+    <script type="text/javascript">
+
+      $('.reply-btn').click(function(event){
+        event.preventDefault();
+        $(this).parent().parent().parent().next(".replied-comments").fadeToggle();
+        $('textarea').val('');
+      });
+
+      $('.comment-box-show').click(function(){
+        $('.comments').fadeToggle()
+      });
+
+
+      $('.like-login').click(function(){
+        $('.like-login-div').fadeToggle()
+      });
+
+      
+    $('#delete').click(function(){
+      return confirm("Are you sure to delete this post?");
+    });
+
+
+    $(function(){
+      setTimeout(function(){
+        $('.alert').slideUp(1500);
+      }, 4000);
+    });
+
+    $(document).ready(function(event){
+      $(document).on('click', '#like', function(event){
+        event.preventDefault();
+        var pk = $(this).attr('value');
+        $.ajax({
+          type: 'POST',
+          url: '{% url "like_post" %}',
+          data: {'id': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+          dataType: 'json',
+          success: function(response){
+            $('#like-section').html(response['form'])
+            console.log($('#like-section').html(response['form']));
+          },
+          error: function(rs, e){
+            console.log(rs.responseText);
+          },
+        });
+      });
+    });
+
+
+    
+    </script>
+
+    <script type="text/javascript">
+      
+      $(document).ready(function(event){
+        $(document).on('click', '#heart', function(event){
+          event.preventDefault();
+          var pk = $(this).attr('value');
+          $.ajax({
+            type: 'POST',
+            url: '{% url "heart_post" %}',
+            data: {'id': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            dataType: 'json',
+            success: function(response){
+              $('#heart-section').html(response['form'])
+              console.log($('#heart-section').html(response['form']));
+            },
+            error: function(rs, e){
+              console.log(rs.responseText);
+            },
+          });
+        });
+      });
+
+
+      $(document).on('submit', '.comment-form', function(event){
+event.preventDefault();
+$.ajax({
+type: 'POST',
+url: $(this).attr('action'),
+data: $(this).serialize(),
+dataType: 'json',
+success: function(response){
+  $('.main-comment-section').html(response['form']);
+  $('textarea').val('');
+  
+  $('.reply-btn').click(function(event){
+    event.preventDefault();
+    $(this).parent().parent().parent().next(".replied-comments").fadeToggle();
+    $('textarea').val('');
+  });
+  $('.comment-box-show').click(function(){
+    $('.comments').fadeToggle()
+  });
+},
+error: function(rs, e){
+console.log(rs, responseText);
+},
+});
+      });
+
+
+      $(document).on('submit', '.reply-form', function(event){
+        event.preventDefault();
+        $.ajax({
+        type: 'POST',
+        url: $(this).attr('action'),
+        data: $(this).serialize(),
+        dataType: 'json',
+        success: function(response){
+          $('.main-comment-section').html(response['form']);
+          $('textarea').val('');
+          
+          $('.reply-btn').click(function(event){
+            event.preventDefault();
+            $(this).parent().parent().parent().next(".replied-comments").fadeToggle();
+            $('textarea').val('');
+          });
+          $('.comment-box-show').click(function(){
+            $('.comments').fadeToggle()
+          });
+        },
+        error: function(rs, e){
+        console.log(rs, responseText);
+        },
+        });
+              });
+      </script>
+
+
+ </body>
+
+</html>

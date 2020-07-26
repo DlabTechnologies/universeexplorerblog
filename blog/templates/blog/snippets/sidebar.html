@@ -1,0 +1,42 @@
+{% load widget_tweaks %}
+
+<aside class="col-md-4 blog-sidebar mt-3">
+  <section class="widget widget_blog_subscription">
+	<p><h2><p>SUBSCRIBE NOW .</p></h2></p>
+    <form action="" method="post" accept-charset="utf-8" id="subscribe-blog">
+      {% csrf_token %}
+      <p>Subscribe to our mailing list to receive updates from the blog.</p>
+      <p>
+      
+        {% render_field form.email type="email" name="email" class="input100"   placeholder="Enter your email address" value="" id="subscribe-field" required="required" %}
+									
+        
+      </p>
+      <p>
+        <button type="submit" class="btn  btn-primary"><i class="fa fa-send"></i> Subscribe </button>
+      </p>
+    </form>
+  </section>
+
+
+  
+<p><a class="btn btn-sm btn-danger mt-2"  href="{% url 'blog:post_feed' %}">Subscribe to my RSS feed</a></p>
+
+
+<section class="widget mt-5" style="max-height: 1500px; overflow-y: scroll;">
+  <p><h2><p>Blog Post .</p></h2></p>
+  <p class="tags mt-2">
+    {% for post in post_title_list %}
+    <a href="{{post.get_absolute_url}}" class="color5 ml-2 mt-1 mb-1 mr-1 ml-1">{{post.title}}</a>
+    {% endfor %}
+  </p>
+  </section>
+  
+    
+    
+
+
+   
+
+  
+  </aside><!-- /.blog-sidebar -->

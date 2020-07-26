@@ -1,0 +1,25 @@
+
+
+{% load cool_num %}
+
+{% if user.is_authenticated %}
+<form action="{% url 'heart_post' %}" method="post">
+  {% csrf_token%}
+  {% if is_heart %}
+  <button type="submit" id="heart" name="post_id" value="{{post.id}}" class="btn btn-danger text-white" style="font-size: 15px;"> {{total_heart|cool_num}}<i class="fa fa-heart mr-2 ml-1"></i> </button>
+  {% else %}
+  <button type="submit" id="heart" name="post_id" value="{{post.id}}" class="btn btn-danger text-white" style="font-size: 15px;">{{total_heart|cool_num}}<i class="fa fa-heart mr-2 ml-1"></i></button>
+  {% endif %}
+
+</form>
+{% else %}
+
+
+<a href="{% url 'login' %}?next={{post.get_absolute_url}}"  class="btn btn-danger text-white heart-login" style="font-size: 15px;">{{total_heart|cool_num}}<i class="fa fa-heart mr-2 ml-1"></i></a>
+              
+{% endif %}
+  
+  
+  
+  
+ 

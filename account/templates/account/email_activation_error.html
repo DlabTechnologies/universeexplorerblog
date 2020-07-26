@@ -1,0 +1,47 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+
+
+
+<!-- Start wrapper-->
+<div class="my-login-page">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center align-items-center h-100">
+				<div class="card-wrapper mt-5">
+					
+					<div class="card fat">
+						<div class="card-body">
+							
+							<p>
+								The Activation link is invalid
+							  </p>
+							 
+							  <p><a style="color: darkorange;"  href="{% url 'register' %}">return to Signup page</a></p>
+
+								
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+
+ 
+    
+	<!--start color switcher-->
+   
+  <!--end color switcher-->
+	
+	</div><!--wrapper-->
+ 
+
+ 
+  
+  {% endblock content %}
+  
