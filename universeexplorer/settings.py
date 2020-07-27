@@ -45,9 +45,9 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'universeexplorerblog.herokuapp.com']
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1', 'localhost', 'universeexplorerblog.herokuapp.com']
 
 
 # Application definition
