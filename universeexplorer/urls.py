@@ -18,7 +18,7 @@ sitemaps = {
 }
 
 urlpatterns = [
-    path(r'admin/', admin.site.urls),
+    path(r'dlabtech_admin/', admin.site.urls),
     path(r'',  views.post_list, name="post_list"),
     path(r'tag/<slug:tag_slug>/',  views.post_list, name="post_list_by_tag"),
     path(r'blog/',  include('blog.urls', namespace="blog")),
