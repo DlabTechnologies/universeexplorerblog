@@ -9,21 +9,22 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-import json
+
 import os
-from django.core.exceptions import ImproperlyConfigured
+
+
+import dotenv 
+
+
+
+#raises django ImproperlyConfigured exception if SECRET_KEY not in os.environ
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
-with open(os.path.join(BASE_DIR, 'universeexplorerblog.json')) as universeexplorerblog_file:
-    universeexplorerblog = json.load(universeexplorerblog_file)
-
-def get_universeexplorerblog(setting, universeexplorerblog=universeexplorerblog):
-    """Get above mention file settings or fail with ImproperlyConfigured"""
-    try:
-        return universeexplorerblog[setting]
-    except KeyError:
-        raise ImproperlyConfigured("Set the {} setting".format(setting))
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
 
@@ -34,7 +35,7 @@ def get_universeexplorerblog(setting, universeexplorerblog=universeexplorerblog)
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_universeexplorerblog('SECRET_KEY')
+SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
@@ -128,10 +129,10 @@ WSGI_APPLICATION = 'universeexplorer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': get_universeexplorerblog('DB_NAME'),
-        'USER': 'postgres',
-        'PASSWORD': get_universeexplorerblog('DB_PASSWORD'),
-        'HOST': 'localhost'
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ['DB_HOST']
     }
 }
 
@@ -195,8 +196,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = get_universeexplorerblog('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = get_universeexplorerblog('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 
 
 
