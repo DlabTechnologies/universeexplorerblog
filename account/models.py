@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
         )
 
         
-
+        user.username = username
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -23,6 +23,7 @@ class UserManager(BaseUserManager):
             email = self.normalize_email(email),
             password=password,
         )
+        user.username = username
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
