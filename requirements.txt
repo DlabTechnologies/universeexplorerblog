@@ -39,7 +39,7 @@ ldif3==3.1.1
 libmagic==1.0
 lxml==4.5.1
 Markdown==3.2.2
-markdown2==2.3.9
+markdown2==2.4.0
 MarkupSafe==1.1.1
 oauthlib==3.1.0
 packaging==20.4
